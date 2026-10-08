@@ -1,11 +1,7 @@
-"""G-Flix anomaly detection. Run:  python anomaly_analysis.py
-Needs anomaly_detection.csv in the same folder (or pass a path as argument).
-Install:  pip install pandas numpy scipy scikit-learn matplotlib seaborn
-"""
 import sys, os
 import numpy as np, pandas as pd
 import matplotlib
-matplotlib.use("Agg")                      # saves PNGs, works without a display
+matplotlib.use("Agg")                      
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
@@ -53,7 +49,7 @@ for c in num:
     iqr_flag |= (df[c] < q1 - 1.5 * i) | (df[c] > q3 + 1.5 * i)
 df["iqrflag"] = iqr_flag
 
-# ---------- Method 2: unsupervised ML (scaled!) ----------
+# ---------- Method 2: unsupervised ML ----------
 X = StandardScaler().fit_transform(df[num + ["remote", "hour"]])
 iso = IsolationForest(n_estimators=300, contamination=0.05, random_state=42).fit(X)
 df["if_score"] = -iso.score_samples(X)
